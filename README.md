@@ -1,69 +1,41 @@
-# Desafio Técnico Backend
+# Desafio Técnico Back-end
+- Projeto desafio feito com base nas instruções do repositório original: https://github.com/linkiodental/order-management-challenge
 
-**Objetivo:** Avaliar organização de código, domínio de TypeScript e implementação de regras de negócio.
-**Stack:** Node.js, Express, Mongoose, TypeScript.
-**Testes:** Vitest (Diferencial).
+# Tecnologias utilizadas
+- Express.js
+- TypeScript & Node.js
+- Mongoose & MongoDB
+- JsonWebToken
+- Bcrypt
 
-### Estrutura de Dados
+# Como usar
+1. Clone o repositório: 
+```
+git clone https://github.com/kev1n999/order-management-challenge
+```
+2. Entre na pasta do projeto: 
+```
+cd order/management-challenge
+```
+3. Configure as variáveis do ambiente:
+```
+SERVER_PORT=4000
+MONGO_URI=mongo-uri
+JWT_SECRET=jwt-secret
+```
 
-**1. User**
+4. Rode o servidor pelo comando: `npm run server`
 
-* `email` (unique), `password`.
+## Rotas disponíveis
 
-**2. Order**
+- **POST** `/api/auth/register`  
+  Para registrar um novo usuário
 
-* Campos: `lab`, `patient`, `customer` (strings).
-* `state`: `CREATED` -> `ANALYSIS` -> `COMPLETED`.
-* `status`: `ACTIVE` | `DELETED`.
-* `services` (Array obrigatório): `{ name: string, value: number, status: 'PENDING' | 'DONE' }`.
+- **POST** `/api/auth/login`  
+  Para fazer login
 
----
+- **GET / POST** `/api/orders/`  
+  Para criar ou listar pedidos
 
-### ETAPA 1: Essencial (Obrigatório)
-
-1. **Autenticação:**
-* Registro e Login retornando JWT.
-* Middleware de proteção para rotas de pedidos.
-
-
-2. **Gestão de Pedidos:**
-* **POST /orders:** Criação do pedido. Padrão: `state: CREATED`, `status: ACTIVE`.
-* **GET /orders:** Listagem com paginação e filtro por `state`.
-
-
-
----
-
-### ETAPA 2: Diferencial (Regras e Qualidade)
-
-1. **Validação de Negócio:**
-* Não permitir criação de pedidos sem serviços ou com valor total zerado.
-
-
-2. **Fluxo de Status:**
-* Endpoint `PATCH /orders/:id/advance`.
-* A transição deve respeitar a ordem estrita: `CREATED` -> `ANALYSIS` -> `COMPLETED`.
-* Bloquear tentativas de pular etapas ou retroceder.
-
-
-3. **Testes (Vitest):**
-* Teste unitário garantindo que a lógica de transição de `state` funciona e bloqueia ações inválidas.
-
-
-
----
-
-### Critérios de Avaliação
-
-* **Arquitetura:** Separação de responsabilidades e clareza.
-* **TypeScript:** Uso correto de tipagem.
-* **Mongoose:** Modelagem e queries eficientes.
-* **Commits:** Histórico e organização no Git.
-
----
-
-### 📅 Prazo de Entrega
-
-A data limite para submissão do link do repositório é **04/01**. Envios após essa data não serão considerados. Bom código!"
-
-**Entrega:** Link do repositório com instruções de execução no README.
+- **PATCH** `/api/orders/:id/advance`  
+  Para avançar estados do pedido a partir do ID
